@@ -87,10 +87,10 @@ while True:
     print year+mon+day+hour+mins
     lists = year+mon+day+hour+mins 
     os.mkdir('/tmp/backup/'+lists)
-  #  time.sleep(60)
     url = 'http://m.sohu.com'
     content  = urllib2.urlopen(url).read()
     gethtml(url,content,lists)
     getjs(url,content,lists)
     getcss(url,content,lists)
     getpic(url,content,lists)
+    time.sleep(60)
