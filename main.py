@@ -26,7 +26,7 @@ def getpic(url,lists):
        
             imagecontent = urllib2.urlopen(imgUrls[0]).read() #读进image数据
             imageName = imgNames[0]+"."+imgType[0]    #image文件的名字
-            print imageName
+         #   print imageName
             filename =con+ "/"+lists+"/images/"+imageName
          #   print filename
             if os.path.exists(filename): 
@@ -85,19 +85,20 @@ def gethtml(url,lists):
     shutil.move('index.html',con+'/'+lists)
 
 
-#获取系统时间信息
+#从命令行中获取相应参数值
 option,long = getopt.getopt(sys.argv[1:],"hd:u:o:")
 for key,value in option:
     if key in ("-d"):
-        get_time = int(value)
+        get_time = int(value)  #获取每隔多久取得一次数据的时间值
     if key in ("-u"):
-        get_url = value
+        get_url = value        #url
     if key in ("-o"):
-        con = value
-print get_time
-print get_url
-print con
+        con = value            #目录
+#print get_time
+#print get_url
+#print con
 while True:
+    #获取时间值
     year = strftime("%Y",localtime()) 
     mon  = strftime("%m",localtime()) 
     day  = strftime("%d",localtime()) 
@@ -106,15 +107,16 @@ while True:
 
 
 #   print year+mon+day+hour+mins
+    #lists为时间目录
     lists = year+mon+day+hour+mins
     os.makedirs(con+"/"+lists)
 
     
     url = get_url
     
-    content  = urllib2.urlopen(url).read()
-    gethtml(url,lists)
-    getjs(url,lists)
-    getcss(url,lists)
-    getpic(url,lists)
-    time.sleep(get_time)
+    content  = urllib2.urlopen(url).read() #从url中读取数据
+    gethtml(url,lists)                     #获得html文件
+    getjs(url,lists)                       #将js文件放入相应目录
+    getcss(url,lists)                      #将css文件放入相应目录
+    getpic(url,lists)                      #将图片文件放入相应目录
+    time.sleep(get_time)                   #休眠时间
